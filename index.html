@@ -12,9 +12,9 @@
     --acento: #ec4899;
 
     /* Posición del bloque impreso, medida desde la esquina
-       inferior derecha de la hoja. Se puede ajustar desde la pantalla. */
+       superior derecha de la hoja. Se puede ajustar desde la pantalla. */
     --margen-derecho: 1.5cm;
-    --margen-inferior: 2cm;
+    --margen-superior: 2cm;
     --ancho-bloque: 9.5cm;
   }
 
@@ -179,11 +179,11 @@
     box-shadow: 0 2px 12px rgba(0, 0, 0, .18);
   }
 
-  /* Bloque anclado a la esquina inferior derecha de la hoja */
+  /* Bloque anclado a la esquina superior derecha de la hoja */
   .bloque {
     position: absolute;
     right: var(--margen-derecho);
-    bottom: var(--margen-inferior);
+    top: var(--margen-superior);
     width: var(--ancho-bloque);
   }
 
@@ -251,7 +251,7 @@
       width: auto;
       height: auto;
       /* La hoja ocupa la página completa para que el bloque
-         quede anclado a la esquina inferior derecha del papel. */
+         quede anclado a la esquina superior derecha del papel. */
       position: absolute;
       inset: 0;
       margin: 0;
@@ -265,7 +265,7 @@
 <div class="no-imprimir">
   <div class="controles">
     <h1>Solicitud de valoración</h1>
-    <p class="ayuda">Elija los tres datos y presione <strong>Imprimir</strong>. Se imprime únicamente el bloque de la esquina inferior derecha de la hoja tamaño carta.</p>
+    <p class="ayuda">Elija los tres datos y presione <strong>Imprimir</strong>. Se imprime únicamente el bloque de la esquina superior derecha de la hoja tamaño carta.</p>
 
     <div class="campos">
       <div>
@@ -314,8 +314,8 @@
           <input type="number" id="margen-derecho" value="1.5" min="0" max="12" step="0.5">
         </div>
         <div>
-          <label for="margen-inferior">Separación del borde inferior (cm)</label>
-          <input type="number" id="margen-inferior" value="2" min="0" max="18" step="0.5">
+          <label for="margen-superior">Separación del borde superior (cm)</label>
+          <input type="number" id="margen-superior" value="2" min="0" max="18" step="0.5">
         </div>
       </div>
       <p class="nota">Sirve para alinear el texto con el formato preimpreso. Los valores se conservan para la próxima vez.</p>
@@ -368,7 +368,7 @@
 
   const margenes = {
     'margen-derecho': document.getElementById('margen-derecho'),
-    'margen-inferior': document.getElementById('margen-inferior')
+    'margen-superior': document.getElementById('margen-superior')
   };
 
   const aviso = document.getElementById('aviso');
