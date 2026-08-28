@@ -4,14 +4,17 @@ Aplicación de una sola página para imprimir, en hoja tamaño carta, la nota de
 solicitud de valoración: la leyenda **FAVOR DE VALORAR:** con el servicio, el
 médico y la firma seleccionados.
 
-El texto se imprime en la **esquina superior derecha** de la hoja, en el mismo
-sentido de lectura del ejemplo, para que el resto del formato quede libre.
+El texto se imprime **girado 90°** en la **esquina superior derecha** de la
+hoja, para que el resto del formato quede libre.
 
 ## Cómo usarla
 
 1. Abrir `index.html` con doble clic (funciona en Chrome, Edge o Firefox; no
    requiere internet ni instalación).
 2. Elegir los tres datos en los combos: **Servicio**, **Médico** y **Firma**.
+   El combo **Giro del texto** define el sentido: 90° a la derecha (el texto se
+   lee de arriba hacia abajo), 90° a la izquierda (de abajo hacia arriba) o sin
+   giro.
 3. Presionar **Imprimir** y confirmar en el cuadro de impresión del navegador.
 
 En la pantalla se ve una vista previa de la hoja completa, con el texto en el

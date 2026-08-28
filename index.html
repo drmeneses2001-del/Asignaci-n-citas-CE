@@ -16,6 +16,7 @@
     --margen-derecho: 1.5cm;
     --margen-superior: 2cm;
     --ancho-bloque: 9.5cm;
+    --alto-bloque: 5.2cm;
   }
 
   * { box-sizing: border-box; }
@@ -179,12 +180,40 @@
     box-shadow: 0 2px 12px rgba(0, 0, 0, .18);
   }
 
-  /* Bloque anclado a la esquina superior derecha de la hoja */
-  .bloque {
+  /* Marco anclado a la esquina superior derecha de la hoja.
+     Al girar el texto, el marco intercambia ancho y alto para que
+     el bloque siga cabiendo exactamente en esa esquina. */
+  .marco {
     position: absolute;
     right: var(--margen-derecho);
     top: var(--margen-superior);
     width: var(--ancho-bloque);
+    height: var(--alto-bloque);
+  }
+
+  .hoja[data-giro="derecha"] .marco,
+  .hoja[data-giro="izquierda"] .marco {
+    width: var(--alto-bloque);
+    height: var(--ancho-bloque);
+  }
+
+  .bloque {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--ancho-bloque);
+    height: var(--alto-bloque);
+    transform-origin: top left;
+  }
+
+  /* Giro de 90°: el texto se lee de arriba hacia abajo (derecha)
+     o de abajo hacia arriba (izquierda). */
+  .hoja[data-giro="derecha"] .bloque {
+    transform: rotate(90deg) translateY(-100%);
+  }
+
+  .hoja[data-giro="izquierda"] .bloque {
+    transform: rotate(-90deg) translateX(-100%);
   }
 
   .leyenda {
@@ -265,7 +294,7 @@
 <div class="no-imprimir">
   <div class="controles">
     <h1>Solicitud de valoración</h1>
-    <p class="ayuda">Elija los tres datos y presione <strong>Imprimir</strong>. Se imprime únicamente el bloque de la esquina superior derecha de la hoja tamaño carta.</p>
+    <p class="ayuda">Elija los tres datos y presione <strong>Imprimir</strong>. Se imprime únicamente el bloque de la esquina superior derecha de la hoja tamaño carta, girado 90°.</p>
 
     <div class="campos">
       <div>
@@ -291,6 +320,15 @@
           <option>Dr. Camal Ugarde</option>
           <option>Dra. Luz María Bravo</option>
           <option>Dra. Alejandra López</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="giro">Giro del texto</label>
+        <select id="giro">
+          <option value="derecha">90° a la derecha</option>
+          <option value="izquierda">90° a la izquierda</option>
+          <option value="ninguno">Sin giro</option>
         </select>
       </div>
 
@@ -332,8 +370,9 @@
 </div>
 
 <!-- Lo único que se envía a la impresora -->
-<section class="hoja" id="hoja">
-  <div class="bloque">
+<section class="hoja" id="hoja" data-giro="derecha">
+  <div class="marco">
+   <div class="bloque">
     <p class="leyenda">FAVOR DE VALORAR:</p>
 
     <p class="renglon">
@@ -350,6 +389,7 @@
       <div class="linea"></div>
       <div class="nombre" id="v-firma"></div>
     </div>
+   </div>
   </div>
 </section>
 
@@ -373,6 +413,8 @@
 
   const aviso = document.getElementById('aviso');
   const raiz = document.documentElement;
+  const hoja = document.getElementById('hoja');
+  const giro = document.getElementById('giro');
 
   function actualizar() {
     for (const clave of Object.keys(campos)) {
@@ -409,6 +451,29 @@
     aplicarMargenes();
   }
 
+  function aplicarGiro() {
+    hoja.dataset.giro = giro.value;
+    try {
+      localStorage.setItem('giro', giro.value);
+    } catch (e) {
+      /* Sin almacenamiento disponible: se usa el giro actual. */
+    }
+  }
+
+  function recuperarGiro() {
+    try {
+      const guardado = localStorage.getItem('giro');
+      if (guardado !== null) {
+        giro.value = guardado;
+      }
+    } catch (e) {
+      /* Sin almacenamiento disponible: se usa el giro por omisión. */
+    }
+    aplicarGiro();
+  }
+
+  giro.addEventListener('change', aplicarGiro);
+
   for (const campo of Object.values(campos)) {
     campo.addEventListener('change', actualizar);
   }
@@ -441,6 +506,7 @@
   });
 
   recuperarMargenes();
+  recuperarGiro();
   actualizar();
 </script>
 
