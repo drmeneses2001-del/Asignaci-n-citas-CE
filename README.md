@@ -23,9 +23,11 @@ imprimen.
 
 ### Ajustar la posición
 
-En **Ajustar la posición en la hoja** se cambia la separación del borde derecho
-y del borde superior, en centímetros, para alinear el texto con el formato
-preimpreso. Los valores quedan guardados para la siguiente ocasión.
+En **Ajustar la posición en la hoja** se cambian la separación del borde
+derecho y del borde superior, en centímetros, y el **tamaño del texto** en
+puntos. El bloque completo se dimensiona a partir de ese tamaño, así que las
+proporciones se conservan al cambiarlo. Los valores quedan guardados para la
+siguiente ocasión.
 
 ### Recomendación para el cuadro de impresión
 

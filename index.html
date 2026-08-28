@@ -15,8 +15,12 @@
        superior derecha de la hoja. Se puede ajustar desde la pantalla. */
     --margen-derecho: 1.5cm;
     --margen-superior: 2cm;
-    --ancho-bloque: 9.5cm;
-    --alto-bloque: 5.2cm;
+
+    /* Todo el bloque se dimensiona a partir del tamaño del texto,
+       así que al cambiarlo las proporciones se conservan. */
+    --tamano: 9pt;
+    --ancho-bloque: calc(var(--tamano) * 26);
+    --alto-bloque: calc(var(--tamano) * 16);
   }
 
   * { box-sizing: border-box; }
@@ -203,6 +207,7 @@
     left: 0;
     width: var(--ancho-bloque);
     height: var(--alto-bloque);
+    font-size: var(--tamano);
     transform-origin: top left;
   }
 
@@ -217,19 +222,19 @@
   }
 
   .leyenda {
-    font-size: 12pt;
+    font-size: 1.1em;
     font-weight: bold;
     letter-spacing: .01em;
-    margin: 0 0 .55cm;
+    margin: 0 0 1.5em;
   }
 
   .renglon {
     display: flex;
     align-items: baseline;
-    gap: .25cm;
-    font-size: 11pt;
+    gap: .5em;
+    font-size: 1em;
     line-height: 1.35;
-    margin: 0 0 .45cm;
+    margin: 0 0 1.3em;
   }
 
   .renglon .etiqueta {
@@ -240,23 +245,23 @@
   .renglon .valor {
     flex: 1;
     border-bottom: 1px solid #000;
-    padding: 0 .15cm 2px;
+    padding: 0 .4em 1px;
     min-height: 1.15em;
   }
 
   .firma {
-    margin-top: 1.6cm;
+    margin-top: 4em;
     text-align: center;
   }
 
   .firma .linea {
     border-top: 1px solid #000;
-    width: 7cm;
-    margin: 0 auto .18cm;
+    width: 75%;
+    margin: 0 auto .5em;
   }
 
   .firma .nombre {
-    font-size: 11pt;
+    font-size: .95em;
   }
 
   /* ---------- Impresión: solo la hoja ---------- */
@@ -355,6 +360,10 @@
           <label for="margen-superior">Separación del borde superior (cm)</label>
           <input type="number" id="margen-superior" value="2" min="0" max="18" step="0.5">
         </div>
+        <div>
+          <label for="tamano">Tamaño del texto (pt)</label>
+          <input type="number" id="tamano" value="9" min="6" max="16" step="0.5">
+        </div>
       </div>
       <p class="nota">Sirve para alinear el texto con el formato preimpreso. Los valores se conservan para la próxima vez.</p>
     </details>
@@ -406,9 +415,10 @@
     firma: document.getElementById('v-firma')
   };
 
-  const margenes = {
-    'margen-derecho': document.getElementById('margen-derecho'),
-    'margen-superior': document.getElementById('margen-superior')
+  const medidas = {
+    'margen-derecho': { entrada: document.getElementById('margen-derecho'), unidad: 'cm' },
+    'margen-superior': { entrada: document.getElementById('margen-superior'), unidad: 'cm' },
+    'tamano': { entrada: document.getElementById('tamano'), unidad: 'pt' }
   };
 
   const aviso = document.getElementById('aviso');
@@ -423,11 +433,11 @@
     aviso.textContent = '';
   }
 
-  function aplicarMargenes() {
-    for (const [nombre, entrada] of Object.entries(margenes)) {
-      const valor = parseFloat(entrada.value);
+  function aplicarMedidas() {
+    for (const [nombre, medida] of Object.entries(medidas)) {
+      const valor = parseFloat(medida.entrada.value);
       if (!isNaN(valor)) {
-        raiz.style.setProperty('--' + nombre, valor + 'cm');
+        raiz.style.setProperty('--' + nombre, valor + medida.unidad);
         try {
           localStorage.setItem(nombre, String(valor));
         } catch (e) {
@@ -437,18 +447,18 @@
     }
   }
 
-  function recuperarMargenes() {
-    for (const [nombre, entrada] of Object.entries(margenes)) {
+  function recuperarMedidas() {
+    for (const [nombre, medida] of Object.entries(medidas)) {
       try {
         const guardado = localStorage.getItem(nombre);
         if (guardado !== null) {
-          entrada.value = guardado;
+          medida.entrada.value = guardado;
         }
       } catch (e) {
         /* Sin almacenamiento disponible: se usan los valores por omisión. */
       }
     }
-    aplicarMargenes();
+    aplicarMedidas();
   }
 
   function aplicarGiro() {
@@ -476,10 +486,13 @@
 
   for (const campo of Object.values(campos)) {
     campo.addEventListener('change', actualizar);
+    campo.addEventListener('input', actualizar);
+    campo.addEventListener('blur', actualizar);
   }
 
-  for (const entrada of Object.values(margenes)) {
-    entrada.addEventListener('input', aplicarMargenes);
+  for (const medida of Object.values(medidas)) {
+    medida.entrada.addEventListener('input', aplicarMedidas);
+    medida.entrada.addEventListener('change', aplicarMedidas);
   }
 
   document.getElementById('imprimir').addEventListener('click', () => {
@@ -505,7 +518,7 @@
     campos.servicio.focus();
   });
 
-  recuperarMargenes();
+  recuperarMedidas();
   recuperarGiro();
   actualizar();
 </script>
