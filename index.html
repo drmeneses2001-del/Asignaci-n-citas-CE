@@ -206,8 +206,8 @@
     transform-origin: top left;
   }
 
-  /* Giro de 90°: el texto se lee de arriba hacia abajo (derecha)
-     o de abajo hacia arriba (izquierda). */
+  /* Giro de 90°: el texto se lee de abajo hacia arriba (izquierda,
+     que es el sentido de uso) o de arriba hacia abajo (derecha). */
   .hoja[data-giro="derecha"] .bloque {
     transform: rotate(90deg) translateY(-100%);
   }
@@ -326,8 +326,8 @@
       <div>
         <label for="giro">Giro del texto</label>
         <select id="giro">
-          <option value="derecha">90° a la derecha</option>
           <option value="izquierda">90° a la izquierda</option>
+          <option value="derecha">90° a la derecha</option>
           <option value="ninguno">Sin giro</option>
         </select>
       </div>
@@ -370,7 +370,7 @@
 </div>
 
 <!-- Lo único que se envía a la impresora -->
-<section class="hoja" id="hoja" data-giro="derecha">
+<section class="hoja" id="hoja" data-giro="izquierda">
   <div class="marco">
    <div class="bloque">
     <p class="leyenda">FAVOR DE VALORAR:</p>

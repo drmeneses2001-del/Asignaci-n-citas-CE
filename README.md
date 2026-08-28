@@ -12,9 +12,9 @@ hoja, para que el resto del formato quede libre.
 1. Abrir `index.html` con doble clic (funciona en Chrome, Edge o Firefox; no
    requiere internet ni instalación).
 2. Elegir los tres datos en los combos: **Servicio**, **Médico** y **Firma**.
-   El combo **Giro del texto** define el sentido: 90° a la derecha (el texto se
-   lee de arriba hacia abajo), 90° a la izquierda (de abajo hacia arriba) o sin
-   giro.
+   El combo **Giro del texto** define el sentido: 90° a la izquierda (el que se
+   usa por omisión, el texto se lee de abajo hacia arriba), 90° a la derecha (de
+   arriba hacia abajo) o sin giro.
 3. Presionar **Imprimir** y confirmar en el cuadro de impresión del navegador.
 
 En la pantalla se ve una vista previa de la hoja completa, con el texto en el
