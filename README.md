@@ -4,6 +4,9 @@ Aplicación de una sola página para imprimir, en hoja tamaño carta, la nota de
 solicitud de valoración: la leyenda **FAVOR DE VALORAR:** con el servicio, el
 médico y la firma seleccionados.
 
+El texto se imprime en la **esquina inferior derecha** de la hoja, tal como se
+señaló en el ejemplo, para que el resto del formato quede libre.
+
 ## Cómo usarla
 
 1. Abrir `index.html` con doble clic (funciona en Chrome, Edge o Firefox; no
@@ -11,9 +14,15 @@ médico y la firma seleccionados.
 2. Elegir los tres datos en los combos: **Servicio**, **Médico** y **Firma**.
 3. Presionar **Imprimir** y confirmar en el cuadro de impresión del navegador.
 
-En la pantalla se ve una vista previa de la hoja tal como saldrá impresa. Los
-controles (títulos y botones) no se imprimen: a la impresora va únicamente la
-hoja.
+En la pantalla se ve una vista previa de la hoja completa, con el texto en el
+lugar exacto en que quedará impreso. Los controles (títulos y botones) no se
+imprimen.
+
+### Ajustar la posición
+
+En **Ajustar la posición en la hoja** se cambia la separación del borde derecho
+y del borde inferior, en centímetros, para alinear el texto con el formato
+preimpreso. Los valores quedan guardados para la siguiente ocasión.
 
 ### Recomendación para el cuadro de impresión
 
